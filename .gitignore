@@ -1,0 +1,9 @@
+# node files
+node_modules/
+
+# parcel build files
+dist/
+.cache/
+
+# WebStorm files
+.idea/
