@@ -1,0 +1,32 @@
+@import "../../theme/constants"
+
+$header-height: 40px
+// magic number, works great for FullHD desktop screens
+$content-height: $main-content-height - $header-height - 200px
+
+.foldable-section
+  height: $header-height
+  overflow: hidden
+  transition: .2s
+
+  &.expanded
+    height: $header-height + $content-height
+
+    .foldable-section-content
+      overflow-y: auto
+      height: $content-height
+
+  h2
+    font-size: 20px
+    font-weight: normal
+    font-family: map-get($fonts, mono)
+
+    margin: 0
+    padding: 0 0 0 16px
+    line-height: $header-height
+    height: $header-height
+    box-sizing: border-box
+
+    cursor: pointer
+    background-color: rgba(map-get($colors, primary-light), 0.3)
+    border-bottom: 2px solid map-get($colors, primary-dark)

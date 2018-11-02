@@ -1,0 +1,120 @@
+{
+  "version": 1.0,
+  "data": [
+    {
+      "category": "Basic Operators",
+      "content": [
+        {
+          "name": "Addition",
+          "signature": "op1 + op2",
+          "description": "Applies the addition operation to <op1> and <op2> and returns the result. If you did not know this you should reconsider your life."
+        },
+        {
+          "name": "Subtraction",
+          "signature": "op1 - op2",
+          "description": "Subtracts <op2> from <op1> and returns the result."
+        },
+        {
+          "name": "Multiplication",
+          "signature": "op1 * op2",
+          "description": "Multiplies the two operands and returns the result."
+        },
+        {
+          "name": "Division",
+          "signature": "op1 / op2",
+          "description": "Divides the first operand by the second and returns the result."
+        },
+        {
+          "name": "Modulo",
+          "signature": "op1 % op2",
+          "description": "Divides the first operand by the second and returns the rest."
+        },
+        {
+          "name": "Print",
+          "signature": "print(object [, objects...])",
+          "description": "Prints all supplied objects to the Minimatica console."
+        }
+      ]
+    },
+    {
+      "category": "Trigonometric Functions",
+      "content": [
+        {
+          "name": "Sine",
+          "signature": "sin(op: number)",
+          "description": "Returns the sine of <op> (in degrees)."
+        },
+        {
+          "name": "Cosine",
+          "signature": "cos(op: number)",
+          "description": "Returns the cosine of <op> (in degrees)."
+        },
+        {
+          "name": "Tangent",
+          "signature": "tan(op: number)",
+          "description": "Returns the tangent of <op> (in degrees)."
+        }
+      ]
+    },
+    {
+      "category": "Function Lambdas",
+      "content": [
+        {
+          "name": "Lambda Expressions",
+          "signature": "[x] -> x^(3) - 5x",
+          "description": "... is an exemplary lambda expression. The identifier within square brackets (here: <x>) is an inline parameter definition. It can be used with coefficients and exponents."
+        },
+        {
+          "name": "Function applications",
+          "signature": "func(x)",
+          "description": "... is an example application of <x> to the function denoted by <func>."
+        }
+      ]
+    },
+    {
+      "category": "Calculus",
+      "content": [
+        {
+          "name": "Integrate",
+          "signature": "integrate(op: function)",
+          "description": "Returns the indefinite integral of the function <op>."
+        },
+        {
+          "name": "Derive",
+          "signature": "derive(op: function)",
+          "description": "Returns the derivation of the function <op>."
+        }
+      ]
+    },
+    {
+      "category": "Matrices and Vectors",
+      "content": [
+        {
+          "name": "Matrix",
+          "signature": "mat<rows: number, cols: number>(object [, objects...])",
+          "description": "Constructs a matrix with the specified number of rows and columns and initializes it with the supplied objects. The number of objects must be exactly <rows> * <cols>."
+        },
+        {
+          "name": "Vector",
+          "signature": "vec<dimensions: number>(object [, objects...])",
+          "description": "Constructs a matrix with one column and <dimensions> rows. It is initialized and handled like a regular matrix."
+        }
+      ]
+    },
+    {
+      "category": "Misc. Functions",
+      "content": [
+        {
+          "name": "Factorial",
+          "signature": "fact(op: number)",
+          "description": "Returns the factorial of <op> (i. e. op!)."
+        },
+        {
+          "name": "Binomial",
+          "signature": "binomial(n: number, k: number)",
+          "description": "Returns the result of <n> choose <k>."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+@import "../../theme/constants"
+
+$content-col-gap: 40px
+
+.main--2-cols
+  display: grid
+  max-width: $content-width
+  margin: 0 auto
+
+  $col-width: calc(#{$content-width - $content-col-gap} / 2)
+  grid-template-columns: $col-width $col-width
+  grid-column-gap: $content-col-gap
