@@ -1,6 +1,26 @@
 {
-  "version": 1.0,
+  "version": 2.0,
   "data": [
+    {
+      "category": "Types",
+      "content": [
+        {
+          "name": "number",
+          "signature": "10 13.4 -22",
+          "description": "Any integer or rational number starting with an optional negative sign."
+        },
+        {
+          "name": "Matrix",
+          "signature": "mat<rows: number, cols: number>(object [, objects...])",
+          "description": "Constructs a matrix with the specified number of rows and columns and initializes it with the supplied objects. The number of objects must be exactly <rows> * <cols>."
+        },
+        {
+          "name": "Vector",
+          "signature": "vec<dimensions: number>(object [, objects...])",
+          "description": "Constructs a matrix with one column and <dimensions> rows. It is initialized and handled like a regular matrix."
+        }
+      ]
+    },
     {
       "category": "Basic Operators",
       "content": [
@@ -41,23 +61,23 @@
       "content": [
         {
           "name": "Sine",
-          "signature": "sin(op: number)",
+          "signature": "sin(op: number): number",
           "description": "Returns the sine of <op> (in degrees)."
         },
         {
           "name": "Cosine",
-          "signature": "cos(op: number)",
+          "signature": "cos(op: number): number",
           "description": "Returns the cosine of <op> (in degrees)."
         },
         {
           "name": "Tangent",
-          "signature": "tan(op: number)",
+          "signature": "tan(op: number): number",
           "description": "Returns the tangent of <op> (in degrees)."
         }
       ]
     },
     {
-      "category": "Function Lambdas",
+      "category": "Lambdas",
       "content": [
         {
           "name": "Lambda Expressions",
@@ -76,28 +96,13 @@
       "content": [
         {
           "name": "Integrate",
-          "signature": "integrate(op: function)",
+          "signature": "integrate(op: function): function",
           "description": "Returns the indefinite integral of the function <op>."
         },
         {
           "name": "Derive",
-          "signature": "derive(op: function)",
+          "signature": "derive(op: function): function",
           "description": "Returns the derivation of the function <op>."
-        }
-      ]
-    },
-    {
-      "category": "Matrices and Vectors",
-      "content": [
-        {
-          "name": "Matrix",
-          "signature": "mat<rows: number, cols: number>(object [, objects...])",
-          "description": "Constructs a matrix with the specified number of rows and columns and initializes it with the supplied objects. The number of objects must be exactly <rows> * <cols>."
-        },
-        {
-          "name": "Vector",
-          "signature": "vec<dimensions: number>(object [, objects...])",
-          "description": "Constructs a matrix with one column and <dimensions> rows. It is initialized and handled like a regular matrix."
         }
       ]
     },
@@ -106,13 +111,58 @@
       "content": [
         {
           "name": "Factorial",
-          "signature": "fact(op: number)",
+          "signature": "fact(op: number): number",
           "description": "Returns the factorial of <op> (i. e. op!)."
         },
         {
           "name": "Binomial",
-          "signature": "binomial(n: number, k: number)",
+          "signature": "binomial(n: number, k: number): number",
           "description": "Returns the result of <n> choose <k>."
+        },
+        {
+          "name": "Power",
+          "signature": "pow(base: number, exp: number): number",
+          "description": "Returns <base> to the power of <exp>."
+        },
+        {
+          "name": "Square Root",
+          "signature": "sqrt(op: number): number",
+          "description": "Returns the square root of the supplied number."
+        },
+        {
+          "name": "Random",
+          "signature": "random(): number",
+          "description": "Returns a pseudo-random number from the interval [0,1)."
+        },
+        {
+          "name": "Floor",
+          "signature": "floor(op: number): number",
+          "description": "Truncates the supplied number and returns the result."
+        },
+        {
+          "name": "Ceiling",
+          "signature": "ceiling(op: number): number",
+          "description": "Rounds to the next higher (!) integer."
+        },
+        {
+          "name": "Round",
+          "signature": "round(op: number): number",
+          "description": "Rounds the argument to an integer number and returns it."
+        }
+      ]
+    },
+    {
+      "category": "Constants",
+      "content": [
+        {
+          "name": "PI",
+          "signature": "pi",
+          "description": "Approximately 3.14159"
+        },
+        {
+          "name": "Eulers Number",
+          "signature": "e",
+          "description": "Approximately 2.71828"
         }
       ]
     }

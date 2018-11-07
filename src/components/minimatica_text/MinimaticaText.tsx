@@ -24,8 +24,11 @@ class MinimaticaText extends React.Component<MinimaticaTextProps, MinimaticaText
       lineHeight: "20px",
       fontFamily: "Fira Mono"
     };
-    const { sourceText } = this.props;
-    return (<textarea  className="minimatica-editor" defaultValue={sourceText} />);
+    const { sourceText, onSourceEdit } = this.props;
+    return (<textarea
+      className="minimatica-editor"
+      defaultValue={sourceText}
+      onChange={(e) => onSourceEdit(e.target.value)} />);
     // return (<AceEditor
     //   mode="minimatica"
     //   theme="monokai"

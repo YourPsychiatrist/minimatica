@@ -20,5 +20,25 @@ export function App(): JSX.Element {
     <SplitView
       left={<MinimaticaReference/>}
       right={<MinimaticaEditor/>}/>
+    <footer>
+      <h3>Updates</h3>
+      <p>
+        Minimatica now has the following functions:
+        <ul>
+          <li>pow</li>
+          <li>sqrt</li>
+          <li>random</li>
+          <li>floor</li>
+          <li>ceiling</li>
+          <li>round</li>
+        </ul>
+        You can find their documentation in the tab "Misc. Functions". <br />
+        I also introduced globally defined constants (docs in the "Constants" tab!):
+        <ul>
+          <li>e</li>
+          <li>pi</li>
+        </ul>
+      </p>
+    </footer>
   </React.Fragment>);
 }

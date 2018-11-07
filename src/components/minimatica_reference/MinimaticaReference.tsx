@@ -32,7 +32,7 @@ class MinimaticaReference extends React.Component<{}, MinimaticaReferenceState> 
    * @param item The raw section item data.
    */
   generateSectionItem = (item: RawSectionItem) => {
-    return (<FoldableSectionItem {...item} />);
+    return (<FoldableSectionItem key={item.name} {...item} />);
   }
 
   /**

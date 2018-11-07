@@ -2,9 +2,11 @@ import { SymbolTable } from "./SymbolTable";
 import { Console } from "./Console";
 import { matrixWithDimensions, vectorWithDimensions } from "./stdlib/Matrix";
 import { Function } from "./stdlib/Function";
-import { cos, sin, tan } from "./stdlib/Geometry";
-import { add, subtract, multiply, dividedBy, modulo } from "./stdlib/Arithmetic";
+import { cos, sin, tan } from "./stdlib/Trigonometry";
+import { add, subtract, multiply, dividedBy, modulo, pow, sqrt, random, floor, ceiling, round } from "./stdlib/Arithmetic";
 import { fact, binomial } from "./stdlib/Algebra";
+
+// TODO PI, e
 
 export class StdLib {
 
@@ -30,7 +32,15 @@ export class StdLib {
     SINE: { name: "sin", f: sin },
     COSINE: { name: "cos", f: cos },
     TANGENT: { name: "tan", f: tan },
-    BINOMIAL: { name: "binomial", f: binomial }
+    BINOMIAL: { name: "binomial", f: binomial },
+    POWER: { name: "pow", f: pow },
+    SQRT: { name: "sqrt", f: sqrt },
+    RANDOM: { name: "random", f: random },
+    FLOOR: { name: "floor", f: floor },
+    CEILING: { name: "ceiling", f: ceiling },
+    ROUND: { name: "round", f: round },
+    E: { name: "e", f: Math.E },
+    PI: { name: "pi", f: Math.PI }
   };
 
   static readonly Types = {

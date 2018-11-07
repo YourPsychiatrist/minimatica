@@ -4,6 +4,7 @@ import { Console } from "./Console";
 import { StdLib } from "./StdLib";
 import { Function } from "./stdlib/Function";
 import { asCallable } from "./stdlib/Callable";
+import {log} from "util";
 
 interface TransitionalParameter {
   value: any;
@@ -34,13 +35,12 @@ export class Parser {
 
   parse(): void {
     this.consumeToken();
-    this.statement();
     while (!this.isToken(Token.EndOfFile) && this._success) {
+      this.statement();
       if (!this.assertToken(Token.StatementTerminator)) {
         return;
       }
       this.consumeToken();
-      this.statement();
     }
   }
 
@@ -113,8 +113,27 @@ export class Parser {
       this.consumeToken();
       this.lambda(param);
     } else {
-      this.term(param);
+      if (this.isToken(Token.Identifier) && this._scanner.lookAhead() === Token.Assignment) {
+        this.assignment(param);
+      } else {
+        this.term(param);
+      }
     }
+  }
+
+  private assignment(param: TransitionalParameter): void {
+    const name = this._scanner.getIdentifier();
+    if (!this._symbolTable.contains(name)) {
+      this.issueError(`Undefined variable "${name}".`);
+      return;
+    }
+    this.consumeToken();
+    if (!this.assertToken(Token.Assignment)) {
+      return;
+    }
+    this.consumeToken();
+    this.expression(param);
+    this._symbolTable.define(name, param.value);
   }
 
   private term(param: TransitionalParameter): void {

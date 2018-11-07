@@ -171,9 +171,9 @@ export class Scanner {
    */
   readChar(): void {
     // if EOF not reached
-    if (this._state.currentPosition.absoluteIndex + 1 < this._sourceText.length) {
+    if (this._state.currentPosition.absoluteIndex + 1 <= this._sourceText.length) {
       // if EOL not reached
-      if (this._sourceText[this._state.currentPosition.absoluteIndex] === '\n') {
+      if (this._sourceText[this._state.currentPosition.absoluteIndex] === Scanner.NEW_LINE) {
         this._state.currentPosition.column = 1;
         this._state.currentPosition.line += 1;
       } else {
@@ -193,7 +193,7 @@ export class Scanner {
     // skip whitespace
     while (this._state.currentChar === ' ' ||
     this._state.currentChar === Scanner.TAB ||
-    this._state.currentChar === '\n') {
+    this._state.currentChar === Scanner.NEW_LINE) {
       this.readChar();
     }
     switch (this._state.currentChar) {
@@ -278,6 +278,10 @@ export class Scanner {
         // @ts-ignore
         while (this._state.currentChar !== Scanner.NEW_LINE && this._state.currentChar !== Scanner.END_OF_FILE) {
           this.readChar();
+        }
+        // @ts-ignore
+        if (this._state.currentChar === Scanner.END_OF_FILE) {
+          this._state.currentToken = Token.EndOfFile;
         }
         this.readToken();
         break;

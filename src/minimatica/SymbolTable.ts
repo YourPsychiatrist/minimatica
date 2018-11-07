@@ -36,4 +36,5 @@ export class SymbolTable {
   define(name: string, value: any): void {
     this._symbols.set(name, value);
   }
+
 }

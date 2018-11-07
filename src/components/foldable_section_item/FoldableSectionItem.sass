@@ -2,15 +2,23 @@
 
 .foldable-section-item
   h3
+    text-transform: uppercase
+    letter-spacing: .1em
+    //text-decoration: underline
     margin: 0
     padding: 0 0 0 32px
-    font-size: 16px
+    font-size: 12px
     line-height: 30px
+    height: 30px
     background-color: #f5f5f5
 
   pre
     margin: 8px 0
     padding: 0 0 0 32px
+
+    & code
+      font-family: map_get($fonts, mono)
+      font-size: 14px
 
   p
     margin: 0 0 8px
