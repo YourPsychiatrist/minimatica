@@ -2,10 +2,11 @@ import * as React from "react";
 import "./MinimaticaText.sass";
 // // import * as ace from "ace-builds/src-noconflict/ace";
 //
-// import AceEditor from "react-ace";
-// import "./ace_mode/mode-minimatica";
-// // import "brace/mode/minimatica";
-// import "brace/theme/monokai";
+import * as ace from "brace";
+import AceEditor from "react-ace";
+import CustomMinimaticaMode from "./ace_mode/CustomMinimaticaMode";
+import "brace/theme/tomorrow";
+import {RefObject} from "react";
 
 interface MinimaticaTextProps {
   sourceText: string;
@@ -14,10 +15,23 @@ interface MinimaticaTextProps {
 
 interface MinimaticaTextState {
 }
+
 // onChange={(event) => this.props.onSourceEdit("Hello")}
 class MinimaticaText extends React.Component<MinimaticaTextProps, MinimaticaTextState> {
 
   state = {};
+
+  // @ts-ignore
+  reference: RefObject<ace>;
+
+  constructor(props: MinimaticaTextProps) {
+    super(props);
+    this.reference = React.createRef();
+  }
+
+  componentDidMount(): void {
+    this.reference.current.editor.getSession().setMode(new CustomMinimaticaMode());
+  }
 
   render() {
     const Style = {
@@ -25,17 +39,21 @@ class MinimaticaText extends React.Component<MinimaticaTextProps, MinimaticaText
       fontFamily: "Fira Mono"
     };
     const { sourceText, onSourceEdit } = this.props;
-    return (<textarea
+    // return (<textarea
+    //   className="minimatica-editor"
+    //   defaultValue={sourceText}
+    //   onChange={(e) => onSourceEdit(e.target.value)} />);
+    return (<AceEditor
+      onChange={(text, action) => onSourceEdit(text)}
       className="minimatica-editor"
-      defaultValue={sourceText}
-      onChange={(e) => onSourceEdit(e.target.value)} />);
-    // return (<AceEditor
-    //   mode="minimatica"
-    //   theme="monokai"
-    //   fontSize={13}
-    //   style={Style}
-    //   value={sourceText}
-    //   name="minimatica-editor"/>);
+      mode="text"
+      theme="tomorrow"
+      ref={this.reference}
+      fontSize={13}
+      style={Style}
+      value={sourceText}
+      name="minimatica-editor"
+      editorProps={{ $blockScrolling: true }}/>);
   }
 
 }
