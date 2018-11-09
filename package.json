@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "test": "./node_modules/parcel-bundler/bin/cli.js ./src/index.html",
-    "build": "./node_modules/parcel-bundler/bin/cli.js build ./src/index.html"
+    "build": "./node_modules/parcel-bundler/bin/cli.js build ./src/index.html --public-url '.'"
   },
   "author": "Niklas Vest",
   "license": "ISC",

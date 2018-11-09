@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Console } from "../../minimatica/Console";
+import { Function } from "../../minimatica/stdlib/Function";
 
 import "./MinimaticaConsole.sass";
+import FunctionDisplay from "../function_display/FunctionDisplay";
 
 interface MinimaticaConsoleProps {
   console: Console;
@@ -18,7 +20,13 @@ class MinimaticaConsole extends React.Component<MinimaticaConsoleProps, Minimati
   }
 
   ConsoleEntry = (obj: any) => {
-    return <li key={(Math.random() * 100).toString()}>{">  " + obj.toString()}</li>
+    let element = null;
+    if (obj instanceof Function) {
+      element = (<FunctionDisplay f={obj} />)
+    } else {
+      element = obj.toString()
+    }
+    return (<li key={(Math.random() * 100).toString()}>{element}</li>)
   };
 
   // prevent the source text triggering a console update
@@ -30,9 +38,9 @@ class MinimaticaConsole extends React.Component<MinimaticaConsoleProps, Minimati
 
   render() {
     const { console } = this.props;
-    return <ul className="console">
+    return (<ul className="console">
       {console.messages.map(this.ConsoleEntry)}
-    </ul>;
+    </ul>);
   }
 
 }

@@ -62,6 +62,11 @@ class MinimaticaEditor extends React.Component<MinimaticaEditorProps, Minimatica
     this.setState({ runs: this.state.runs + 1 });
   };
 
+  clear = () => {
+    // TODO check why replacing the console prints to stdout instead of the mm console
+    this.setState({ sourceText: "" })
+  }
+
   render() {
     const { sourceText, console, runs } = this.state;
     return (<div className="minimatica-editor">
@@ -70,6 +75,7 @@ class MinimaticaEditor extends React.Component<MinimaticaEditorProps, Minimatica
           onSourceEdit={this.onSourceEdit} />
       <br />
       <button onClick={this.interpret}>Run</button>
+      <button onClick={this.clear}>Clear</button>
       <MinimaticaConsole console={console} />
     </div>);
   }

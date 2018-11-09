@@ -6,3 +6,15 @@
   width: 100%!important
   box-sizing: border-box
   resize: none
+
+  $controls-color: map-get($colors, primary-dark)
+  button
+    border: 1px solid $controls-color
+    background-color: transparent
+    color: $controls-color
+    text-transform: uppercase
+    padding: 4px 8px
+    margin-right: 16px
+
+    &:hover
+      background-color: #efefef

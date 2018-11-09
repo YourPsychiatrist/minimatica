@@ -1,7 +1,14 @@
-.minimatica-text
-  textarea
+@import "../../theme/constants"
+
+.minimatica-editor
     display: block
     width: 100%
-    border: 1px solid red
-    height: 100%!important
     box-sizing: border-box
+    border-width: 0
+    // random 0.5 because 1px on this element is way thicker
+    // than on minimatica reference???
+    border-left: 0.5px solid map-get($colors, primary-dark)
+
+    // the element mounted by ace
+    .ace_scrollbar
+        @extend %custom-scrollbar

@@ -13,6 +13,7 @@ $content-height: $main-content-height - $header-height - 200px
     height: $header-height + $content-height
 
     .foldable-section-content
+      @extend %custom-scrollbar
       overflow-y: auto
       height: $content-height
 
@@ -28,4 +29,4 @@ $content-height: $main-content-height - $header-height - 200px
 
     cursor: pointer
     background-color: rgba(map-get($colors, primary-light), 0.3)
-    border-bottom: 2px solid map-get($colors, primary-dark)
+    border-bottom: 1px solid map-get($colors, primary-dark)
