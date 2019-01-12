@@ -1,20 +1,36 @@
-@import '../../theme/constants'
+@import '../../theme/globals'
+
+$controls-height: 1.5rem
 
 .minimatica-editor
-  font-family: map-get($fonts, mono)
-  height: 400px!important
-  width: 100%!important
-  box-sizing: border-box
-  resize: none
+  display: grid
+  grid-template-columns: calc(#{$content-width} / 2) auto
+  grid-column-gap: 1rem
+  grid-template-rows: auto $controls-height
+  grid-row-gap: 1rem
 
-  $controls-color: map-get($colors, primary-dark)
+  height: calc(100vh - #{$header-height} - #{$header-margin} - #{$bottom-margin})
+  width: 100% !important
+  box-sizing: border-box
+
+  font-family: map-get($fonts, mono)
+
+  .minimatica-editor__controls
+    height: $controls-height
+
   button
-    border: 1px solid $controls-color
+    border: 1px solid map-get($colors, primary-dark)
     background-color: transparent
-    color: $controls-color
+    padding: 0 0.5rem
+    margin-right: 1rem
+
+    color: #333
+    font-size: .7rem
+    font-family: map_get($fonts, code)
     text-transform: uppercase
-    padding: 4px 8px
-    margin-right: 16px
+
+    line-height: calc(#{$controls-height} - 2px)
+    height: $controls-height
 
     &:hover
-      background-color: #efefef
+      background-color: rgba(map-get($colors, primary-dark), .1)

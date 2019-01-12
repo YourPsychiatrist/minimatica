@@ -1,32 +1,27 @@
-@import "../../theme/constants"
+@import "../../theme/globals"
 
-$header-height: 30px
-// magic number, works great for FullHD desktop screens
-$content-height: $main-content-height - $header-height - 200px
+$ref-header-height: 2.2rem
 
 .foldable-section
-  height: $header-height
+  transition: 1s
+  height: $ref-header-height
   overflow: hidden
-  transition: .2s
 
-  &.expanded
-    height: $header-height + $content-height
+  &.foldable-section--expanded
+    height: auto
 
-    .foldable-section-content
-      @extend %custom-scrollbar
-      overflow-y: auto
-      height: $content-height
-
-  h2
-    font-size: 14px
+  .foldable-section__header
+    font-size: .9rem
+    font-weight: bold
     font-family: map-get($fonts, mono)
 
     margin: 0
-    padding: 0 0 0 16px
-    line-height: $header-height
-    height: $header-height
-    box-sizing: border-box
+    // equal spacing on top and left:
+    padding: 0 0 0 calc((#{$ref-header-height} - .9rem) / 2)
+    line-height: $ref-header-height
+    height: $ref-header-height
 
     cursor: pointer
-    background-color: rgba(map-get($colors, primary-light), 0.3)
+    background-color: rgba(map-get($colors, primary-light), 0.05)
     border-bottom: 1px solid map-get($colors, primary-dark)
+    box-sizing: border-box

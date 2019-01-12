@@ -3,15 +3,34 @@ import { Console } from "./Console";
 import { matrixWithDimensions, vectorWithDimensions } from "./stdlib/Matrix";
 import { Function } from "./stdlib/Function";
 import { cos, sin, tan } from "./stdlib/Trigonometry";
-import { add, subtract, multiply, dividedBy, modulo, pow, sqrt, random, floor, ceiling, round } from "./stdlib/Arithmetic";
+import {
+  add,
+  subtract,
+  multiply,
+  dividedBy,
+  modulo,
+  pow,
+  sqrt,
+  random,
+  floor,
+  ceiling,
+  round
+} from "./stdlib/Arithmetic";
 import { fact, binomial } from "./stdlib/Algebra";
 
-// TODO PI, e
-
+/**
+ * This class is a wrapper for the standard Minimatica symbol table.
+ */
 export class StdLib {
 
+  /**
+   * The console used for printing.
+   */
   static console: Console | any = window.console;
 
+  /**
+   * Functions that can be classified as arithmetical operations.
+   */
   static readonly Arithmetic = {
     ADD: add,
     SUBTRACT: subtract,
@@ -20,11 +39,19 @@ export class StdLib {
     MODULO: modulo,
   };
 
+  /**
+   * Functions which provide an IO interface for the Minimatica system.
+   * (Would be pretty boring if you couldn't see the results of computations
+   * wouldn't it?)
+   */
   static readonly IO = {
-    // Note: f can not be shortened to StdLib.console.log, it ust be a function expression
+    // Note: f can not be shortened to StdLib.console.log, it must be a function expression!
     PRINT: { name: "print", f: (...args: any) => StdLib.console.log(...args) }
   };
 
+  /**
+   * This is where the real math happens.
+   */
   static readonly Algebra = {
     DERIVE: { name: "derive", f: (f: Function) => f.derive() },
     INTEGRATE: { name: "integrate", f: (f: Function) => f.integrate() },
@@ -43,33 +70,38 @@ export class StdLib {
     PI: { name: "pi", f: Math.PI }
   };
 
+  /**
+   * Non-primitive types in Minimatica.
+   */
   static readonly Types = {
     MATRIX: { name: "mat", f: matrixWithDimensions },
     VECTOR: { name: "vec", f: vectorWithDimensions }
   };
 
+  /**
+   * Populates the symbol table with definitions for all
+   * names within the supplied name group.
+   * @param group The name group to define.
+   * @param table The symbol table in which to define the names.
+   */
   private static defineAllInGroup(group: string, table: SymbolTable): void {
-    if (StdLib[ group ] === undefined) {
-      throw new Error(`Failed to load standard library: Function group "${group}" does not exist.`);
+    if (StdLib[group] === undefined) {
+      throw new Error(`Failed to load standard library: Name group "${ group }" does not exist.`);
     }
-    for (let Func of Object.keys(StdLib[ group ])) {
-      table.define(StdLib[ group ][ Func ].name, StdLib[ group ][ Func ].f);
+    for (let Func of Object.keys(StdLib[group])) {
+      table.define(StdLib[group][Func].name, StdLib[group][Func].f);
     }
   }
 
+  /**
+   * @return A symbol table that comes pre-loaded with all types, functions
+   *         and constants provided by the StdLib.
+   */
   static preloadedSymbolTable(): SymbolTable {
     const table = new SymbolTable();
-
-    // ---- FUNCTIONS ----
-    // -- IO --
     StdLib.defineAllInGroup("IO", table);
-
-    // -- ALGEBRA --
     StdLib.defineAllInGroup("Algebra", table);
-
-    // ---- TYPES ----
     StdLib.defineAllInGroup("Types", table);
-
     return table;
   }
 }

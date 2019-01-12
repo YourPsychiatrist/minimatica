@@ -1,85 +1,98 @@
 import * as React from "react";
 import { Console } from "../../minimatica/Console";
 import MinimaticaText from "../minimatica_text/MinimaticaText";
-import MinimaticaConsole from "../minimatica_console/MinimaticaConsole";
+import { MinimaticaConsole } from "../minimatica_console/MinimaticaConsole";
 import { Parser } from "../../minimatica/Parser";
-
+import { StdLib } from "../../minimatica/StdLib";
+import { MMStorage } from "../../utils";
 import "./MinimaticaEditor.sass";
-
-const DEFAULT_SOURCE = "# function literals\n" +
-  "var f1 := [x] -> x^(3) - 2x^(2) + x;\n" +
-  "print(f1);\n" +
-  "print(f1(3));\n" +
-  "\n" +
-  "# derive functions\n" +
-  "var fder := derive(f1);\n" +
-  "print(fder);\n" +
-  "print(fder(3));\n" +
-  "\n" +
-  "# integrate functions\n" +
-  "var fint := integrate(f1);\n" +
-  "print(fint);\n" +
-  "print(fint(3));\n" +
-  "\n" +
-  "# matrices\n" +
-  "var mat1 := mat<2, 2>(1, 0, \n" +
-  "                   0, 1);\n" +
-  "var mat2 := mat<2, 2>(3, -2,\n" +
-  "                      5,  1);\n" +
-  "print(mat1);\n" +
-  "print(mat1 * mat2);\n" +
-  "\n" +
-  "# basic math functions\n" +
-  "print(fact(5)); # 5! = 120\n" +
-  "print(binomial(10, 8)); # 10 choose 8\n" +
-  "print(cos(90)); # cos(90) = 0 using degrees";
-
-interface MinimaticaEditorProps {
-}
+import * as ExampleSource from "../../res/example.json";
 
 interface MinimaticaEditorState {
-  sourceText: string;
+  /**
+   * The text within the editor.
+   */
+  sourceCode: string;
+
+  /**
+   * The console to log messages and errors to.
+   */
   console: Console;
-  runs: number;
 }
 
-class MinimaticaEditor extends React.Component<MinimaticaEditorProps, MinimaticaEditorState> {
+/**
+ * An Ace-Editor along with controls and a visual console.
+ */
+export class MinimaticaEditor extends React.Component<{}, MinimaticaEditorState> {
 
   state = {
-    sourceText: DEFAULT_SOURCE,
+    sourceCode: "",
     console: new Console(),
-    runs: 0
   };
 
-  onSourceEdit = (sourceText: string) => {
-    this.setState({ sourceText });
+  constructor(props: {}) {
+    super(props);
+    StdLib.console = this.state.console;
+  }
+
+  /**
+   * Callback for changes on the source code.
+   * @param sourceCode The new source code.
+   */
+  private onSourceEdit = (sourceCode: string) => {
+    this.setState({ sourceCode });
   };
 
-  interpret = () => {
+  /**
+   * Runs the minimatica parser on the source code in the editor.
+   */
+  private parse = () => {
     this.state.console.clear();
-    const parser = new Parser(this.state.sourceText, this.state.console);
-    parser.parse();
-    this.setState({ runs: this.state.runs + 1 });
+    const parser = new Parser(this.state.sourceCode);
+    try {
+      parser.parse();
+    } catch (exc) {
+      this.state.console.error(exc.toString());
+    }
   };
 
-  clear = () => {
-    // TODO check why replacing the console prints to stdout instead of the mm console
-    this.setState({ sourceText: "" })
+  /**
+   * Clears the editor.
+   */
+  private clear = () => {
+    this.setState({ sourceCode: "" });
+  };
+
+  // load cached code on editor mount
+  componentDidMount(): void {
+    let sourceCode = ExampleSource.code;
+    try {
+      sourceCode = MMStorage.loadSourceCodeFromCache();
+    } catch (_) { /* nothing to do; just load default source */
+    }
+    this.setState({ sourceCode });
+  }
+
+  // cache code on source code change (state update!)
+  componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<MinimaticaEditorState>, snapshot?: any): void {
+    MMStorage.cacheSourceCode(this.state.sourceCode);
   }
 
   render() {
-    const { sourceText, console, runs } = this.state;
+    const { sourceCode, console } = this.state;
+
     return (<div className="minimatica-editor">
       <MinimaticaText
-          sourceText={sourceText}
-          onSourceEdit={this.onSourceEdit} />
-      <br />
-      <button onClick={this.interpret}>Run</button>
-      <button onClick={this.clear}>Clear</button>
-      <MinimaticaConsole console={console} />
+        sourceCode={ sourceCode }
+        onSourceEdit={ this.onSourceEdit } />
+
+      <MinimaticaConsole console={ console } />
+
+      <div className="minimatica-editor__controls">
+        <button onClick={ this.parse }>Run</button>
+        <button onClick={ this.clear }>Clear</button>
+      </div>
     </div>);
   }
 
 }
-
-export default MinimaticaEditor;

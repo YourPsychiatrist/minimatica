@@ -1,0 +1,54 @@
+@import "../../theme/globals"
+
+.tabbed-container
+  max-width: $content-width
+  margin: 0 auto
+  padding: 0 .6rem
+
+  header
+    display: grid
+    grid-template-columns: auto 500px
+    // TODO 500px ^
+
+    overflow: hidden
+    max-height: $header-height
+    margin-bottom: $header-margin
+    border-bottom: 1px solid map-get($colors, primary-light)
+    box-sizing: border-box
+
+    .tabbed-container__label
+      display: block
+      margin: 0
+      padding: 0
+
+    .tabbed-container__navbar
+      $border-strength: 2px
+      display: flex
+      overflow: hidden
+      height: $header-height
+
+      .tabbed-container__navbar__tab
+        flex-grow: 1
+        transition: .3s
+        cursor: pointer
+
+        font-family: map-get($fonts, mono)
+        font-size: .8rem
+        color: #333
+        text-align: center
+        line-height: $header-height
+
+        height: $header-height
+        border-bottom: $border-strength solid transparent
+
+        &.tabbed-container__navbar__tab--selected
+          color: map-get($colors, primary-dark)
+          border-bottom-color: map-get($colors, primary-light)
+          height: calc(#{$header-height} - #{$border-strength})
+
+  .tabbed-container__component
+    @extend %custom-scrollbar
+    overflow: auto
+    box-sizing: border-box
+    min-height: calc(100vh - #{$header-height} - #{$header-margin} - #{$bottom-margin})
+    max-height: calc(100vh - #{$header-height} - #{$header-margin} - #{$bottom-margin})

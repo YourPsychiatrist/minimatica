@@ -1,26 +1,29 @@
-@import "../../theme/constants"
+@import "../../theme/globals"
 
-.foldable-section-item
+.foldable-section__item
   h3
+    margin: 0
+    padding: 0 0 0 2rem
+    height: 2rem
+
     text-transform: uppercase
     letter-spacing: .1em
-    //text-decoration: underline
-    margin: 0
-    padding: 0 0 0 32px
-    font-size: 12px
-    line-height: 30px
-    height: 30px
+    font-size: .75rem
+    line-height: 2rem
+    font-family: map-get($fonts, sans-serif)
+
     background-color: #f0f0f0
 
   pre
-    margin: 8px 0
-    padding: 0 0 0 32px
+    margin: .5rem 0
+    padding: 0 0 0 2rem
 
     & code
       font-family: map_get($fonts, mono)
-      font-size: 14px
+      font-size: .9rem
 
   p
-    margin: 0 0 8px
-    padding: 0 16px
-    font-size: 15px
+    margin: 0 0 .5rem
+    padding: 0 1.1rem
+    font-size: .9rem
+    font-family: map-get($fonts, sans-serif)

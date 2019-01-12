@@ -6,7 +6,7 @@
       "content": [
         {
           "name": "number",
-          "signature": "10 13.4 -22",
+          "signature": "e.g. 10 13.4 -22",
           "description": "Any integer or rational number starting with an optional negative sign."
         },
         {
@@ -82,12 +82,12 @@
         {
           "name": "Lambda Expressions",
           "signature": "[x] -> x^(3) - 5x",
-          "description": "... is an exemplary lambda expression. The identifier within square brackets (here: <x>) is an inline parameter definition. It can be used with coefficients and exponents."
+          "description": "... is an exemplary lambda expression. The identifier within square brackets (here: <x>) is an inline parameter definition. It can be used with coefficients and exponents. The exponent must be enclosed in parentheses."
         },
         {
           "name": "Function applications",
           "signature": "func(x)",
-          "description": "... is an example application of <x> to the function denoted by <func>."
+          "description": "... is an example application of the function <func> to the argument <x>."
         }
       ]
     },

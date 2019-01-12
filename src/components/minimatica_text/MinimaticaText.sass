@@ -1,14 +1,11 @@
-@import "../../theme/constants"
+@import "../../theme/globals"
 
-.minimatica-editor
-    display: block
-    width: 100%
-    box-sizing: border-box
-    border-width: 0
-    // random 0.5 because 1px on this element is way thicker
-    // than on minimatica reference???
-    border-left: 0.5px solid map-get($colors, primary-dark)
+.minimatica-text
+  width: 100% !important
+  height: 100% !important
+  border-left: 1px solid map-get($colors, primary-dark)
+  box-sizing: border-box
 
-    // the element mounted by ace
-    .ace_scrollbar
-        @extend %custom-scrollbar
+  // an element mounted by ace
+  .ace_scrollbar
+    @extend %custom-scrollbar

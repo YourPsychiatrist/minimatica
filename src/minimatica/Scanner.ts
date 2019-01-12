@@ -1,30 +1,34 @@
-import { Console } from "./Console";
+//// The implementation of Scanner and parser are very sparsely documented since
+//// I was following a basic procedure, generating the systems from the Minimatica EBNF.
 
 /**
  * An enumeration of tokens
  * the minimatica scanner knows
  * about (/ is able to handle).
+ *
+ * The values of the tokens are used
+ * for printing error messages.
  */
 export enum Token {
   Var = 'var',
-  Assignment = 'ass',
-  LeftPar = 'lpar',
-  RightPar = 'rpar',
+  Assignment = ':=',
+  LeftPar = ')',
+  RightPar = '(',
   Comma = 'comma',
-  CaptureBegin = 'capbeg',
-  CaptureEnd = 'capend',
-  GenericBegin = 'genbeg',
-  GenericEnd = 'genend',
-  StatementTerminator = 'terminator',
-  LambdaArrow = 'arw',
-  Number = 'num',
-  Identifier = 'ident',
-  Exponential = 'exp',
-  Multiplication = 'mult',
-  Division = 'div',
-  Addition = 'add',
-  Subtraction = 'sub',
-  Modulo = 'mod',
+  CaptureBegin = '[',
+  CaptureEnd = ']',
+  GenericBegin = '<',
+  GenericEnd = '>',
+  StatementTerminator = ';',
+  LambdaArrow = '->',
+  Number = 'number',
+  Identifier = 'identifier',
+  Exponential = '^',
+  Multiplication = '*',
+  Division = '/',
+  Addition = '+',
+  Subtraction = '-',
+  Modulo = '%',
   EndOfFile = 'eof',
   Error = 'error'
 }
@@ -97,7 +101,7 @@ interface ScannerState {
    * The most recently found token.
    */
   currentToken: Token;
-  
+
   /**
    * A buffer for number literals and identifiers.
    */
@@ -135,9 +139,6 @@ export class Scanner {
    */
   private _state: ScannerState;
 
-  // TODO documentation
-  private _console: Console;
-
   /**
    * An error function which is called as soon as the
    * scanner encounters unknown tokens.
@@ -146,9 +147,8 @@ export class Scanner {
 
   /**
    * @param sourceText The minimatica source to scan.
-   * @param console The console to log errors to.
    */
-  constructor (sourceText: string, console?: Console) {
+  constructor(sourceText: string) {
     this._state = {
       currentChar: '',
       currentPosition: <TextPosition>{
@@ -159,11 +159,18 @@ export class Scanner {
       literalBuffer: '',
       currentToken: undefined
     };
-    this.onError = () => {};
+    this.onError = () => {
+    };
     this._sourceText = sourceText;
-    this._console = console;
 
     this.readChar();
+  }
+
+  /**
+   * @return The position of the scanner's "caret" within the source text.
+   */
+  currentPosition(): TextPosition {
+    return this.freezeState().currentPosition;
   }
 
   /**
@@ -182,7 +189,7 @@ export class Scanner {
       this._state.currentChar = this._sourceText[this._state.currentPosition.absoluteIndex];
       this._state.currentPosition.absoluteIndex += 1;
     } else {
-      this._state.currentChar = Scanner.END_OF_FILE
+      this._state.currentChar = Scanner.END_OF_FILE;
     }
   }
 
@@ -323,7 +330,7 @@ export class Scanner {
       literalBuffer: this._state.literalBuffer
     };
   }
-  
+
   private setState(state: ScannerState) {
     this._state = state;
   }

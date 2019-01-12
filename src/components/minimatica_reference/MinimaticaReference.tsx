@@ -1,66 +1,36 @@
 import * as React from "react";
 import * as Reference from "../../res/reference.json";
-import "./MinimaticaReference.sass";
 import { FoldableSection, RawSection } from "../foldable_section/FoldableSection";
 import { FoldableSectionItem, RawSectionItem } from "../foldable_section_item/FoldableSectionItem";
 
-interface MinimaticaReferenceState {
-  /**
-   * The index of the currently expanded
-   * reference section.
-   */
-  expandedIndex: number;
+/**
+ * Returns a section item element created from
+ * the supplied raw data.
+ * @param item The raw section item data.
+ */
+function SectionItem(item: RawSectionItem): JSX.Element {
+  return (<FoldableSectionItem key={ item.name } { ...item } />);
 }
 
-class MinimaticaReference extends React.Component<{}, MinimaticaReferenceState> {
-
-  state = {
-    expandedIndex: 0
-  }
-
-  /**
-   * @param index The index of the section
-   *              to expand.
-   */
-  switchSection = (index: number) => {
-    this.setState({expandedIndex: index});
-  }
-
-  /**
-   * Returns a section item element created from
-   * the supplied raw data.
-   * @param item The raw section item data.
-   */
-  generateSectionItem = (item: RawSectionItem) => {
-    return (<FoldableSectionItem key={item.name} {...item} />);
-  }
-
-  /**
-   * Returns a section element created from the
-   * supplied raw data.
-   * @param section The raw section data.
-   * @param index The index at which this section
-   *              will be mounted in its parent.
-   */
-  generateSection = (section: RawSection, index: number) => {
-    return (<FoldableSection
-      key={section.category}
-      header={section.category}
-      expanded={index == this.state.expandedIndex}
-      onSelect={() => this.switchSection(index)}>
-      {section.content.map(this.generateSectionItem)}
-    </FoldableSection>);
-  }
-
-  render() {
-    const { expandedIndex } = this.state;
-    return (<div className="foldable-section-list">
-      {/* Load and display all sections from the reference json file */}
-      {Reference.data.map((section: RawSection, currentIndex: number) => {
-        return this.generateSection(section, currentIndex);
-      })}
-    </div>);
-  }
+/**
+ * Returns a section element created from the
+ * supplied raw data.
+ * @param section The raw section data.
+ */
+function Section(section: RawSection): JSX.Element {
+  return (<FoldableSection
+    key={ section.category }
+    header={ section.category }>
+    { section.content.map(SectionItem) }
+  </FoldableSection>);
 }
 
-export default MinimaticaReference;
+/**
+ * A reference for all data types, functions and constants available in Minimatica.
+ */
+export function MinimaticaReference(): JSX.Element {
+  return (<React.Fragment>
+    {/* Load and display all sections from the reference json file */ }
+    { Reference.data.map(Section) }
+  </React.Fragment>);
+}

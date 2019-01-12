@@ -1,8 +1,11 @@
 import * as React from "react";
+import { FoldableSectionItem, RawSectionItem } from "../foldable_section_item/FoldableSectionItem";
+import { withOptionalStyles } from "../../utils";
 import "./FoldableSection.sass";
-import {FoldableSectionItem, RawSectionItem} from "../foldable_section_item/FoldableSectionItem";
-import {withOptionalStyles} from "../../react_utils";
 
+/**
+ * A section as exported from JSON
+ */
 export interface RawSection {
   /**
    * The section header.
@@ -15,6 +18,13 @@ export interface RawSection {
   content: RawSectionItem[];
 }
 
+interface FoldableSectionState {
+  /**
+   * Whether the section's contents are shown.
+   */
+  expanded: boolean;
+}
+
 interface FoldableSectionProps {
   /**
    * The section header.
@@ -22,30 +32,39 @@ interface FoldableSectionProps {
   header: string;
 
   /**
-   * Whether the section's content
-   * should be displayed or not.
-   */
-  expanded: boolean;
-
-  /**
-   * The callback for header clicks.
-   */
-  onSelect: () => any;
-
-  /**
    * The section items.
    */
+  // @ts-ignore
   children: FoldableSectionItem[];
 }
 
-export function FoldableSection(props: FoldableSectionProps) {
-  const { header, expanded, onSelect, children } = props;
-  const expandedClass = expanded ? "expanded" : "";
-  return (<div className={withOptionalStyles("foldable-section", expandedClass)}>
-    <h2 onClick={onSelect}>{header}</h2>
-    {/* This div is hidden if the section is not expanded */}
-    <div className="foldable-section-content">
-      {children}
-    </div>
-  </div>);
+/**
+ * A section which consists of sub-sections.
+ */
+export class FoldableSection extends React.Component<FoldableSectionProps, FoldableSectionState> {
+
+  state = {
+    expanded: false
+  };
+
+  private toggle = (): void => {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  };
+
+  render() {
+    const { header, children } = this.props;
+    const { expanded } = this.state;
+
+    const className = withOptionalStyles("foldable-section",
+      expanded ? "foldable-section--expanded" : "");
+    return (<section className={ className }>
+      <h2 className="foldable-section__header" onClick={ this.toggle }>{ header }</h2>
+      {/* This div is hidden if the section is not expanded */ }
+      <div className="foldable-section__content">
+        { children }
+      </div>
+    </section>);
+  }
 }
